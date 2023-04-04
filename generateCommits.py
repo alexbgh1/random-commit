@@ -18,19 +18,24 @@ if (num_commits < 0 or num_commits > 10):
     print("No te pasesxd")
     sys.exit(1)
 
+# Actualmente tiene 15 memes :o
 url = "https://alexbgh1.github.io/cositas/data/data.json"
 
-# Cargar las frases desde la URL
+# Cargar las memes desde la URL
 response = requests.get(url)
-frases = json.loads(response.text)
+memes = json.loads(response.text)
 
-# print frases img
-print(random.choice( frases )["img"])
+# print memes url img
+print(random.choice( memes )["img"])
 
+repetidos = []
 # generar los commits
 for i in range(num_commits):
     # Elegir una frase al azar
-    commit_msg = random.choice(frases)["img"]
+    commit_msg = random.choice(memes)["img"]
+    while commit_msg in repetidos:
+        commit_msg = random.choice(memes)["img"]
+    repetidos.append(commit_msg)
     
     # hacer commit vacío con el mensaje elegido
     subprocess.run(["git", "commit", "--allow-empty", "-m", commit_msg])
